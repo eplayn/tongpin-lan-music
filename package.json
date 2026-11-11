@@ -1,0 +1,19 @@
+{
+  "name": "tongpin-lan-music",
+  "version": "3.2.3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "description": "Synchronized LAN system-audio sharing with adaptive common buffering",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eplayn/tongpin-lan-music.git"
+  }
+}

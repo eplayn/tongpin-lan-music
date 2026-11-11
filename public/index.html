@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#11211d">
+  <meta name="description" content="同一局域网，同一个音乐时刻。先缓冲，再同步共听。">
+  <title>同频 · 局域网音乐共听</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body data-role="listener">
+  <div style="padding:12px 20px;text-align:center;background:#24372b;color:#e9a46b;font-size:13px"><a href="/live/" style="color:inherit">实时共听已上线：共享音乐标签页，无需上传歌曲 →</a></div>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="同频首页"><span class="brand-wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>同频<span class="brand-sub">TOGETHER IN TIME</span></span></a>
+      <div class="connection-pill"><span class="status-dot" aria-hidden="true"></span><span id="connectionStatus">正在连接房间</span></div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="pageTitle">
+        <div><p class="eyebrow">LOCAL MUSIC ROOM</p><h1 id="pageTitle">把这一刻，听在一起。</h1><p class="intro-copy">同一个局域网，共享同一段旋律。音乐提前缓冲，由房间统一安排播放时刻。</p></div>
+        <div class="room-mark"><span class="room-mark-dot" aria-hidden="true"></span>私人局域网房间</div>
+      </section>
+
+      <section class="join-panel" aria-label="加入共听">
+        <div class="join-copy"><strong>先让这个设备加入</strong><p>每台设备首次需要点一次，启用声音并完成校时。</p></div>
+        <div class="join-actions"><label class="sr-only" for="deviceName">设备名称</label><input id="deviceName" class="device-input" type="text" maxlength="40" placeholder="给这台设备起个名字" autocomplete="off"><button id="joinBtn" class="button button-accent" type="button">加入共听 <span aria-hidden="true">↗</span></button><button id="leaveBtn" class="button button-quiet" type="button">退出共听</button></div>
+      </section>
+
+      <section class="player-panel" aria-label="当前播放">
+        <div class="record-stage" aria-hidden="true"><div class="record-orbit"></div><div class="record"><div class="record-label"><span>同频</span><small>SIDE A<br>SHARED MOMENTS</small><i></i></div></div><span class="record-caption">ONE ROOM. ONE RHYTHM.</span></div>
+        <div class="player-content">
+          <div class="player-topline"><span class="section-kicker">NOW SHARING</span><span id="roomStatus" class="room-status">等待音乐</span></div>
+          <h2 id="trackTitle">选择一首歌，一起听。</h2>
+          <p id="trackMeta" class="track-meta">由主机导入音乐，所有听众准备好后统一起播</p>
+          <div class="timeline"><label class="sr-only" for="progress">房间播放进度</label><input id="progress" type="range" min="0" max="1000" step="1" value="0" aria-label="房间播放进度"><div class="time-labels"><span id="elapsed">0:00</span><span id="duration">0:00</span></div></div>
+          <div id="hostControls" class="host-only playback-controls" aria-label="主机播放控制"><button id="playBtn" class="button button-accent play-button" type="button"><span aria-hidden="true">▶</span> 同步播放</button><button id="pauseBtn" class="button button-outline" type="button"><span aria-hidden="true">Ⅱ</span> 全体暂停</button><button id="nextBtn" class="button button-outline" type="button">下一首 <span aria-hidden="true">→</span></button><button id="seekBtn" class="button button-quiet" type="button">跳到所选进度</button></div>
+          <div id="notice" class="notice" role="status" aria-live="polite">加入后会先缓冲音乐并校准时间，等待主机开始播放。</div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="section-panel library-panel" aria-labelledby="libraryTitle"><div class="section-heading"><div><p class="section-kicker">YOUR COLLECTION</p><h2 id="libraryTitle">房间音乐库</h2></div><label class="button button-outline upload-label host-only" for="upload"><span aria-hidden="true">＋</span> 导入音乐<input id="upload" class="sr-only" type="file" accept="audio/*"></label></div><div id="library" class="library"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">♫</span><p>音乐库正在载入</p><small>主机导入的歌曲会出现在这里</small></div></div><p class="section-note">主机统一控制播放、暂停与切歌；每台设备独立调节音量。</p></section>
+
+        <section class="section-panel local-panel" aria-labelledby="localTitle"><div class="section-heading"><div><p class="section-kicker">JUST FOR THIS DEVICE</p><h2 id="localTitle">本机聆听</h2></div><span class="small-label">仅影响本设备</span></div><div class="volume-row"><label for="volume">播放音量</label><span aria-hidden="true">− &nbsp; ♪ &nbsp; ＋</span></div><input id="volume" type="range" min="0" max="100" step="1" value="70" aria-label="本机播放音量"><div class="calibration-row"><label for="offset">出声补偿 <span>ms</span></label><input id="offset" type="number" min="-1000" max="2000" step="1" value="0" inputmode="numeric"></div><p class="local-help">听起来比其他设备晚？适当增加补偿值。正值提前、负值延后，只调整本机。</p><details class="sync-details"><summary>同步诊断</summary><dl class="sync-metrics"><div><dt>时钟估计误差</dt><dd id="clockValue">— ms</dd></div><div><dt>播放进度偏差</dt><dd id="driftValue">— ms</dd></div><div><dt>音频输出延迟</dt><dd id="outputValue">— ms</dd></div></dl><button id="syncBtn" class="button button-outline" type="button">重新校时</button><p class="diagnostic-note">浏览器读数用于判断同步状态，不代表已经实测扬声器之间的物理声差。</p></details></section>
+      </div>
+
+      <section class="section-panel listeners-panel" aria-labelledby="listenersTitle"><div class="section-heading"><div><p class="section-kicker">IN THIS ROOM</p><h2 id="listenersTitle">一起听的人</h2></div><span class="small-label">准备完成，再共同起播</span></div><div class="table-scroll"><table><thead><tr><th scope="col">设备</th><th scope="col">状态</th><th scope="col">校时误差</th><th scope="col">播放偏差</th><th scope="col">管理</th></tr></thead><tbody id="clients"><tr><td colspan="5" class="empty-table">还没有设备加入共听</td></tr></tbody></table></div></section>
+
+      <section class="share-panel" aria-label="邀请其他设备"><div><strong>邀请同一 Wi-Fi 下的朋友</strong><p><a id="shareUrl" href="#">正在获取房间地址…</a></p></div><button id="copyLinkBtn" class="button button-outline" type="button">复制房间地址</button></section>
+      <p class="mobile-note">手机建议保持页面前台；锁屏或切到后台可能被系统暂停。蓝牙设备可在“本机聆听”中校准额外延迟。</p>
+    </main>
+    <footer><span>同频 · 让音乐成为共同的时间</span><span>本地共享 / 无需云端中转</span></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+data/
+qa/
+backups/
+runtime/
+drivers/
+node_modules/
+dist/
+.env
+.env.*
+*.pfx
+*.pem
+*.key
+*.cer
+*.log
+*.zip
