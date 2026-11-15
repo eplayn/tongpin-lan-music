@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>同频 C · 一起听见</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,"Microsoft YaHei",sans-serif;background:#101713;color:#edf4ed}*{box-sizing:border-box}body{margin:0;padding:8vh 20px}main{max-width:660px;margin:auto}.brand{font-size:13px;letter-spacing:.18em;color:#9fb4a5}h1{font-size:clamp(36px,8vw,58px);line-height:1.12;font-weight:550;letter-spacing:-.04em;margin:28px 0 16px}.intro{line-height:1.8;color:#aabcaf;max-width:540px}.card{background:#1b2620;border:1px solid #32443a;border-radius:22px;padding:28px;margin:32px 0}.status{display:flex;align-items:center;gap:10px;margin-bottom:24px}.dot{height:9px;width:9px;border-radius:50%;background:#9db19f}button{border:0;border-radius:12px;padding:16px 28px;background:#c2efb0;color:#172214;font-size:17px;cursor:pointer;font-weight:650}button:disabled{opacity:.5;cursor:wait}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;border-top:1px solid #35463b;margin-top:28px;padding-top:24px}.value{font-size:26px;font-variant-numeric:tabular-nums}.label{color:#9bb09f;font-size:12px;margin-top:6px}.note,details{font-size:13px;line-height:1.85;color:#aabcaf}details{margin-top:24px}label{display:block;margin:12px 0}input{width:100%;accent-color:#c2efb0}footer{font-size:12px;color:#7f9685}.warn{color:#f4cc89}.bar{height:3px;background:#304137;margin:24px 0 0;border-radius:4px;overflow:hidden}#level{height:100%;width:0;background:#c2efb0;transition:width .2s}#error{color:#f0bb91;white-space:pre-wrap}a{color:#c2efb0}
+</style>
+<main><div class="brand">同频 C / LAN AUDIO</div><h1>让声音，<br>在同一刻抵达。</h1>
+<p class="intro">连接同一个局域网，点一下开始收听。电脑主机和所有听众使用统一的播放时间。</p>
+<section class="card"><div class="status"><span class="dot" id="dot"></span><span id="state">尚未开始</span></div>
+<button id="start">开始收听</button><div id="error"></div><div class="bar"><div id="level"></div></div>
+<div class="metrics"><div><div class="value" id="latency">—</div><div class="label">手动固定缓冲 / ms</div></div><div><div class="value" id="rtt">—</div><div class="label">网络往返 / ms</div></div><div><div class="value" id="listeners">—</div><div class="label">已连接听众</div></div></div>
+<details><summary>播放诊断与校准</summary><p id="diagnostics">连接后显示时钟、声卡缓冲和迟到数据。</p>
+<label>收听音量 <input id="volume" type="range" min="0" max="100" value="80"></label>
+<label>额外延后 <span id="calibrationValue">0</span> ms（仅当前设备）<input id="calibration" type="range" min="-300" max="300" step="1" value="0"></label>
+<p>蓝牙、外置功放和部分浏览器不能准确报告实际出声延迟；可用此项配合实听校准。负数提前，正数延后。</p></details></section>
+<p class="note">首次播放需要点击按钮。请保持页面处于可播放状态；手机锁屏或系统冻结页面可能中断音频，回来后会重新同步。若本机已经由 Windows 程序播放，请勿再在本机浏览器重复收听。</p>
+<footer>48 kHz · 立体声 PCM · 手动固定缓冲 · 原速播放 · 独立重连</footer></main>
+<script src="/client.js"></script></html>

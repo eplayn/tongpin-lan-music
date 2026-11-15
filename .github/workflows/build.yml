@@ -1,0 +1,49 @@
+name: C build and playback checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  portable:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+      - name: Fixed buffer, clock and wire format
+        run: |
+          gcc -std=c11 -O2 -Wall -Wextra -Werror tests/test_sync.c src/sync.c -o /tmp/test_sync -lm
+          /tmp/test_sync
+      - name: Browser original-speed playback
+        run: |
+          node --check web/client.js
+          node tests/client_playback.cjs
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+      - uses: msys2/setup-msys2@v2
+        id: msys2
+        with:
+          msystem: UCRT64
+          install: mingw-w64-ucrt-x86_64-gcc
+      - name: Add native GCC to PATH
+        shell: pwsh
+        run: |
+          Join-Path '${{ steps.msys2.outputs.msys2-location }}' 'ucrt64/bin' | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+      - name: Compile Windows application and run checks
+        shell: pwsh
+        run: ./build.ps1 -Test
+      - name: Inspect Windows executable without a driver package
+        shell: pwsh
+        run: python tests/verify_release.py

@@ -1,0 +1,15 @@
+VB-CABLE is provided by VB-Audio Software / Vincent Burel.
+Official origin: https://www.vb-cable.com/ and https://vb-audio.com/Cable/
+VB-CABLE is Donationware. If you find it useful, please support the author
+by donating or purchasing a license through the official website.
+Licensing and distribution: https://vb-audio.com/Services/licensing.htm
+Professional/organizational use is subject to the vendor's licensing terms.
+
+LanSync provides a link to the official VB-CABLE download page. No VB-CABLE
+installer or driver files are embedded in the EXE or included in the release
+or source archive. Obtain the vendor's package and license from its website.
+VB-CABLE is third-party software; it is not claimed to be authored in C by
+the LanSync project.
+
+The LanSync Windows application is implemented in C and uses Windows APIs.
+Browser playback uses the embedded HTML/JavaScript Web Audio client.
